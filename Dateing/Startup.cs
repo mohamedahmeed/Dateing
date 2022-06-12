@@ -31,6 +31,7 @@ namespace Dateing
             {
                 Options.UseSqlServer(Configuration.GetConnectionString("con"));
             });
+            services.AddCors();
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
@@ -49,7 +50,7 @@ namespace Dateing
             }
 
             app.UseRouting();
-
+            app.UseCors(x => x.AllowAnyHeader().AllowAnyHeader().AllowAnyOrigin());
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
