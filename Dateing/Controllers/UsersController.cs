@@ -1,4 +1,5 @@
 ﻿using Dateing.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -18,6 +19,7 @@ namespace Dateing.Controllers
             this.entity = entity;
         }
         [HttpGet]
+        [Authorize]
         public async Task<ActionResult<IEnumerable<AppUser>>> GettAllUsers()
         {
          return await entity.Users.ToListAsync();
@@ -31,6 +33,7 @@ namespace Dateing.Controllers
           return await entity.Users.FirstOrDefaultAsync(s=>s.Id==id);
         }
         [HttpPost]
+        
         public  ActionResult<AppUser> AddUser(AppUser a)
         {
             if (a != null)

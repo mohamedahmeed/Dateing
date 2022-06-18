@@ -1,4 +1,5 @@
-﻿using Dateing.Models;
+﻿using Dateing.Interfaces;
+using Dateing.Models;
 using Dateing.VM;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -12,13 +13,15 @@ namespace Dateing.Controllers
     public class AccountController : BaseApiController
     {
         private readonly DatingEntity entity;
+        private readonly ITokenservices tokenservices;
 
-        public AccountController(DatingEntity entity)
+        public AccountController(DatingEntity entity, ITokenservices tokenservices)
         {
             this.entity = entity;
+            this.tokenservices = tokenservices;
         }
         [HttpPost("Register")]
-        public async Task<ActionResult<AppUser>> register(RegisterVm register)
+        public async Task<ActionResult<UserVm>> register(RegisterVm register)
         {
             if (await exist(register.UserName))
             {
@@ -33,10 +36,13 @@ namespace Dateing.Controllers
             };
             entity.Users.Add(user);
            await entity.SaveChangesAsync();
-            return Ok(user);
+            return new UserVm {
+                UserName = user.userName,
+                Token= tokenservices.GetToken(user)
+            };
         }
         [HttpPost("Login")]
-        public async Task<ActionResult<AppUser>> login(LoginVm login)
+        public async Task<ActionResult<UserVm>> login(LoginVm login)
         {
            var user =await entity.Users.SingleOrDefaultAsync(s=>s.userName==login.UserName);
             if (user == null)
@@ -48,7 +54,11 @@ namespace Dateing.Controllers
                 if (computedHash[i] != user.passwordHash[i])
                     return Unauthorized("Invalid Password");
             }
-            return Ok(user);
+            return new UserVm
+            {
+                UserName = user.userName,
+                Token = tokenservices.GetToken(user)
+            };
         }
         private async Task<bool> exist(string userName)
         {
