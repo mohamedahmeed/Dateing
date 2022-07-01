@@ -19,7 +19,7 @@ namespace Dateing.Controllers
             this.entity = entity;
         }
         [HttpGet]
-        [Authorize]
+       // [Authorize]
         public async Task<ActionResult<IEnumerable<AppUser>>> GettAllUsers()
         {
          return await entity.Users.ToListAsync();

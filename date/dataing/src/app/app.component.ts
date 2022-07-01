@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Users } from './Models/user';
 
-import { User } from './Models/user';
+
 import { ServicesService } from './services/services.service';
 
 @Component({
@@ -17,5 +18,8 @@ export class AppComponent implements OnInit {
       next:next=> this.user=next ,
       error:error=> console.log(error)
     })
+  }
+  setCurrentUser(user:Users){
+    //const u:Users= JSON.parse(localStorage.getItem("user"));
   }
 }

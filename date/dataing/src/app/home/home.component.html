@@ -1,0 +1,16 @@
+<div class="container mt-3">
+  <div *ngIf="!registermode" style="text-align:center;">
+     <h1>Find Matched</h1>
+     <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Non, praesentium!</p>
+     <button (click)="registertoggle()" class="btn btn-info ">Register</button>
+  </div>
+  <div *ngIf="registermode" class="container">
+    <div class="row justify-content-center">
+        <div class="col-6">
+          <app-register [Userfromhome]="users" (can)="cancleregister($event)"></app-register>
+        </div>
+    </div>
+  </div>
+</div>
+<!-- []====>لنقل الداتا من الاب الى الابن يوزرفروم هوم موجوده فى الابن وقبلها انبوت
+()====> نقل الداتا من الابن الى الاب  -->
