@@ -4,14 +4,16 @@ using Dateing.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Dateing.Migrations
 {
     [DbContext(typeof(DatingEntity))]
-    partial class DatingEntityModelSnapshot : ModelSnapshot
+    [Migration("20220708180058_v2-2")]
+    partial class v22
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

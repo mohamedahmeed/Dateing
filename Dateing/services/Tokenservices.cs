@@ -21,7 +21,7 @@ namespace Dateing.services
         {
             var claims = new List<Claim>()
             {
-                new Claim(JwtRegisteredClaimNames.NameId,user.userName),
+                new Claim(JwtRegisteredClaimNames.NameId,user.UserName),
             };
             var crds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
             var t = new SecurityTokenDescriptor()

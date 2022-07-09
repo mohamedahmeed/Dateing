@@ -30,21 +30,21 @@ namespace Dateing.Controllers
             using var x = new System.Security.Cryptography.HMACSHA512();
             var user = new AppUser()
             {
-                userName = register.UserName.ToLower(),
+                UserName = register.UserName.ToLower(),
                 passwordHash = x.ComputeHash(Encoding.UTF8.GetBytes(register.Password)),
                 passwordSalt=x.Key,
             };
             entity.Users.Add(user);
            await entity.SaveChangesAsync();
             return new UserVm {
-                UserName = user.userName,
+                UserName = user.UserName,
                 Token= tokenservices.GetToken(user)
             };
         }
         [HttpPost("Login")]
         public async Task<ActionResult<UserVm>> login(LoginVm login)
         {
-           var user =await entity.Users.SingleOrDefaultAsync(s=>s.userName==login.UserName);
+           var user =await entity.Users.SingleOrDefaultAsync(s=>s.UserName==login.UserName);
             if (user == null)
                 return Unauthorized("invalid UserName");
          using   var x=new System.Security.Cryptography.HMACSHA512(user.passwordSalt);
@@ -56,13 +56,13 @@ namespace Dateing.Controllers
             }
             return new UserVm
             {
-                UserName = user.userName,
+                UserName = user.UserName,
                 Token = tokenservices.GetToken(user)
             };
         }
         private async Task<bool> exist(string userName)
         {
-            return await entity.Users.AnyAsync(s => s.userName == userName.ToLower());
+            return await entity.Users.AnyAsync(s => s.UserName == userName.ToLower());
         }
     }
 }

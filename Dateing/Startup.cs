@@ -1,6 +1,7 @@
 using Dateing.Interfaces;
 using Dateing.Models;
 using Dateing.services;
+using Dateing.VM;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -33,6 +34,10 @@ namespace Dateing
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddScoped<ITokenservices, Tokenservices>();
+            services.AddScoped<IuserRepository, UserRepository>();
+            services.AddAutoMapper(typeof(UserProfile));
+            services.AddControllersWithViews();
+
             services.AddDbContext<DatingEntity>(Options =>
             {
                 Options.UseSqlServer(Configuration.GetConnectionString("con"));

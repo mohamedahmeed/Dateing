@@ -4,14 +4,16 @@ using Dateing.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Dateing.Migrations
 {
     [DbContext(typeof(DatingEntity))]
-    partial class DatingEntityModelSnapshot : ModelSnapshot
+    [Migration("20220707164030_v2-1")]
+    partial class v21
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -77,14 +79,14 @@ namespace Dateing.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<bool>("IsMain")
-                        .HasColumnType("bit");
-
                     b.Property<string>("Url")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("appUserId")
                         .HasColumnType("int");
+
+                    b.Property<bool>("isMain")
+                        .HasColumnType("bit");
 
                     b.Property<int>("publicId")
                         .HasColumnType("int");
